@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb+srv://rayyanAlam:rayyanMongo@cluster0.7lznl.mongodb.net/paytm-app");
+mongoose.connect(`add your mongdoDb cluster url`);
 
 const UserSchema = new mongoose.Schema({
     username : String,
