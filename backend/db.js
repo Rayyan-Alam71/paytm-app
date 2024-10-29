@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb+srv://rayyanAlam:rayyanMongo@cluster0.7lznl.mongodb.net/my-ptm-app");
+mongoose.connect("add-mongoose-cluster-link");
 
 const UserSchema = new mongoose.Schema({
     username : String,
