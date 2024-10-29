@@ -8,7 +8,7 @@ const {JWT_SECRET} = require('../config')
 
 
 const signupBody = zod.object({
-    username:zod.string(),
+    username : zod.string(),
     firstname : zod.string(),
     lastname : zod.string(),
     password : zod.string()
@@ -27,9 +27,14 @@ const updateBody = zod.object({
 })
 router.post('/signup', async (req,res)=>{
     const {success} = signupBody.safeParse(req.body);
+    console.log(typeof(req.body))
+    console.log(req.body);
+    
+    console.log({success});
+    
     if(!success){
-        res.status(411).json({
-            msg: 'Email already taken / Incorrect inputs'
+        return res.status(411).json({
+            msg: ' Incorrect inputs'
         })
     }
 
@@ -42,17 +47,6 @@ router.post('/signup', async (req,res)=>{
             msg : 'user with this credentials already exists'
         })
     }
-
-    // const existingUser = await User.findOne({
-    //     username: req.body.username
-    // })
-    
-    // if (existingUser) {
-    //     return res.status(411).json({
-    //         message: "Email already taken/Incorrect inputs"
-    //     })
-    // }
-
     const user = await User.create({
         username : req.body.username,
         firstname : req.body.firstname,
@@ -64,9 +58,9 @@ router.post('/signup', async (req,res)=>{
         userId : userId,
         balance : Math.random()*(1000) + 1
     })
-    const token = jwt.sign("rayyan", JWT_SECRET);
+    const token = jwt.sign({userId}, JWT_SECRET);
 
-    res.status(200).json({
+    res.json({
         msg : 'user created successfully',
         token : token
     })
@@ -113,6 +107,7 @@ router.put('/', authMiddleware, async (req,res)=>{
 router.get('/bulk', async (req, res)=>{
     const filter = req.query.filter || "";
     const users = await User.find({
+    
         $or:[{
             firstname :{
                 $regex : filter

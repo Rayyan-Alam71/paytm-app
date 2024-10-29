@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
-mongoose.connect(`add your mongdoDb cluster url`);
+mongoose.connect("mongodb+srv://rayyanAlam:rayyanMongo@cluster0.7lznl.mongodb.net/my-ptm-app");
 
 const UserSchema = new mongoose.Schema({
     username : String,
     firstname : String,
     lastname : String,
+    
     password : String
 })
 
